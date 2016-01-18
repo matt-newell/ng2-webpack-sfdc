@@ -1,7 +1,7 @@
 {
-  "name": "angular2-store",
+  "name": "ng2-webpack-sfdc",
   "version": "1.0.0",
-  "description": "",
+  "description": "NG2 / TypeScript / RX / Webpack",
   "main": "webpack.config.js",
   "scripts": {
     "deploy": "NODE_ENV=production webpack -p",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joemaddalone/angular2-store.git"
+    "url": "git+https://github.com/matt-newell/ng2-webpack-sfdc.git"
   },
-  "author": "Joe Maddalone",
+  "author": "Matt Newell",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/joemaddalone/angular2-store/issues"
+    "url": "https://github.com/matt-newell/ng2-webpack-sfdc/issues"
   },
-  "homepage": "https://github.com/joemaddalone/angular2-store#readme",
+  "homepage": "https://github.com/matt-newell/ng2-webpack-sfdc#readme",
   "dependencies": {
     "angular2": "2.0.0-beta.1",
     "es6-promise": "3.0.2",

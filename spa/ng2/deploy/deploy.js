@@ -3,15 +3,14 @@ var zip = require('zip-dir');
 var path = require('path')
 var jsforce = require('jsforce');
 var meta = require('jsforce-metadata-tools');
+var options;
 
-function FileListPlugin(options) {}
+function FileListPlugin(opt) {
+  options = opt;
+}
 
 FileListPlugin.prototype.apply = function(compiler) {
   compiler.plugin('emit', function(compilation, callback) {
-    // Create a header string for the generated file:
-    var filelist = 'In this build:\n\n';
-    //TODO get this from webpack setting
-    var dir = './dist';
 
     fs.readFile('../../config/.session', 'utf8', function (err, data) {
         if (err) throw err; // we'll not consider error handling for now
@@ -25,20 +24,20 @@ FileListPlugin.prototype.apply = function(compiler) {
         var staticResource = new require('node-zip')();
 
         for (var filename in compilation.assets) {
-          var file = fs.readFileSync('./dist/' + filename, 'utf8');
+          var file = fs.readFileSync(options.path + filename, 'utf8');
           staticResource.file(filename, file);
         }
 
         var staticResourceZip = staticResource.generate({base64: true, compression: 'DEFLATE'});
         var metaData = {
-          fullName: 'ng2',
+          fullName: options.name,
           content: staticResourceZip,
           contentType: 'application/zip',
           cacheControl: 'Public'
         };
         conn.metadata.upsert('StaticResource', [metaData], function(err, results){
           if(err) throw err;
-          if(results) console.log('StaticResource: 'results);
+          if(results) console.log('StaticResource: ', results);
         });
 
         conn.identity(function(err, res) {
@@ -49,16 +48,6 @@ FileListPlugin.prototype.apply = function(compiler) {
           console.log("display name: " + res.display_name);
         });
     });
-
-    // Insert this list into the Webpack build as a new file asset:
-    // compilation.assets['filelist.md'] = {
-    //   source: function() {
-    //     return filelist;
-    //   },
-    //   size: function() {
-    //     return filelist.length;
-    //   }
-    // };
 
     callback();
   });

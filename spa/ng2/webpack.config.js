@@ -32,7 +32,7 @@ module.exports = {
               'icons/*/*.png'
           ]
       }),
-    new deploy()
+    new deploy({path:'./dist', name:'ng2'})
   ],
   devServer: {
     inline: true,

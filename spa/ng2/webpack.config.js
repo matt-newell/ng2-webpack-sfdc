@@ -26,6 +26,7 @@ module.exports = {
               '*.html',
               'fonts/*.ttf',
               'fonts/webfonts/*.svg',
+              'fonts/webfonts/*.eot',
               'icons!(-sprite)/*/*.svg',
               'styles/*.css',
               'icons/*/*.png'

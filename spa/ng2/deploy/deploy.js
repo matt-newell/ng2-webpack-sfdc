@@ -1,5 +1,5 @@
 var fs = require('fs');
-var zip = require('zip-dir');
+var zip = require('node-zip');
 var path = require('path')
 var jsforce = require('jsforce');
 var meta = require('jsforce-metadata-tools');
@@ -21,7 +21,7 @@ FileListPlugin.prototype.apply = function(compiler) {
             accessToken: obj.accessToken
         });
 
-        var staticResource = new require('node-zip')();
+        var staticResource = new zip();
 
         for (var filename in compilation.assets) {
           var file = fs.readFileSync(options.path + filename, 'utf8');

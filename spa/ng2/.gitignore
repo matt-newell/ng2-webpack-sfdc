@@ -4,6 +4,3 @@ dist/*.js
 dist/**
 */.DS_Store
 .DS_Store
-**.sublime-project
-config/**
-src/staticresources/**

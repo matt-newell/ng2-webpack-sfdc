@@ -1,7 +1,7 @@
 var webpack = require('webpack');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+var slds = require('copy-webpack-plugin');
 var path = require('path');
-var deploy = require('./deploy/deploy');
+var sfdcdeploy = require('./deploy/deploy');
 module.exports = {
   resolve: {
     extensions: ['', '.ts', '.js']
@@ -17,7 +17,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
-    new CopyWebpackPlugin([
+    new slds([
       { from: './node_modules/@salesforce-ux/design-system/assets', to: './assets'},
       ], {
           ignore: [
@@ -32,7 +32,7 @@ module.exports = {
               'icons/*/*.png'
           ]
       }),
-    new deploy({path:'./dist', name:'ng2'})
+    new sfdcdeploy({path:'./dist/', name:'ng2'})
   ],
   devServer: {
     inline: true,

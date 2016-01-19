@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
+var deploy = require('./deploy/deploy');
 module.exports = {
   resolve: {
     extensions: ['', '.ts', '.js']
@@ -27,7 +28,8 @@ module.exports = {
               'styles/*.css',
               'icons/*/*.png'
           ]
-      })
+      }),
+    new deploy()
   ],
   devServer: {
     inline: true,

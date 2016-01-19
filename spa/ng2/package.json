@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "deploy": "NODE_ENV=production webpack -p",
-    "server": "webpack-dev-server",
+    "server": "webpack-dev-server -p",
     "json-server": "./node_modules/.bin/json-server ./api/generate.js -q --port 9000",
     "start": "./node_modules/.bin/npm-run-all --parallel server json-server"
   },

@@ -24,6 +24,8 @@ module.exports = {
               'README',
               '*.txt',
               '*.html',
+              'fonts/*.ttf',
+              'fonts/webfonts/*.svg',
               'icons!(-sprite)/*/*.svg',
               'styles/*.css',
               'icons/*/*.png'

@@ -1,0 +1,9 @@
+<apex:page docType="html-5.0" showHeader="false" sidebar="false" standardStylesheets="false">
+<apex:includeScript value="{!URLFOR($Resource.ng2, 'vendor.bundle.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.ng2, 'bundle.js')}"/>
+  <body>
+    <div class="container">
+      <div ng-store="ng-store"></div>
+    </div>
+  </body>
+</apex:page>

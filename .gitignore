@@ -9,3 +9,5 @@ config/**
 src/staticresources/**
 /deploy/**
 *.sublime-workspace
+
+*.log

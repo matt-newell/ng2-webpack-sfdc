@@ -1,0 +1,41 @@
+<div>
+  <h1>Cart</h1>
+  <table class="table table-hover">
+      <thead>
+      <tr>
+          <th></th>
+          <th>Item</th>
+          <th>Qty</th>
+          <th></th>
+          <th style="width:100">Subtotal</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="#product of products">
+            <td>
+            <a class="btn btn-default btn-sm" (click)="removeItem(product)">
+                X
+            </a>
+            </td>
+            <td>{{product.title}}</td>
+            <td>{{product.qty}}</td>
+            <td>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" (click)="decreaseItem(product)">-</a>
+                <a class="btn btn-default btn-sm" (click)="increaseItem(product)">+</a>
+            </div>
+            </td>
+            <td>${{product.qty*product.price | number: '.2'}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+          <td colSpan="4" class="text-right">Total</td>
+          <td>${{ products | cartTotal | number: '.2'}}</td>
+      </tr>
+      </tfoot>
+  </table>
+  <a [routerLink]="['Home']" class="btn btn-success">
+    Continue Shopping
+  </a>
+</div>

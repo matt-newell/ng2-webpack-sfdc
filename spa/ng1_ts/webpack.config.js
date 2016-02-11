@@ -31,7 +31,8 @@ module.exports = {
               'styles/*.css',
               'icons/*/*.png'
           ]
-      })
+      }),
+    new sfdcdeploy({path:'./dist/', name:'ng2'})
   ],
   devServer: {
     inline: true,

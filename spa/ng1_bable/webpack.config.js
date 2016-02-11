@@ -7,8 +7,8 @@ module.exports = {
     extensions: ['', '.ts', '.js']
   },
   entry: {
-    'app': './src/main.ts',
-    'vendor': './src/vendor.ts',
+    'app': './src/main.js',
+    'vendor': './src/vendor.js',
   },
   output: {
     path: './dist',
@@ -32,6 +32,7 @@ module.exports = {
               'icons/*/*.png'
           ]
       })
+    //   ,new sfdcdeploy({path:'./dist/', name:'ng2'})
   ],
   devServer: {
     inline: true,
@@ -48,9 +49,12 @@ module.exports = {
         loaders: ["style", "css?sourceMap", "sass?sourceMap"]
       },
       {
-        test: /\.ts$/,
+        test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'ts-loader'
+        loader: 'babel-loader',
+        query: {
+             presets: ['es2015']
+         }
       },
       {
         test: /\.html$/,

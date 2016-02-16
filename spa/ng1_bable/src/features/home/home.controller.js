@@ -1,7 +1,18 @@
 export default class HomeController {
-  constructor(randomNames) {
+  constructor(randomNames, jsr) {
     this.random = randomNames;
     this.name = 'World';
+    this.myProducts = {};
+    this.jsr = jsr;
+  }
+
+  getProducts() {
+
+      this.myProducts = this.jsr({
+          method: configSettings.remoteActions.newell,
+          args: []
+      })
+      .then(result => console.log(result) );
   }
 
   changeName() {
@@ -13,4 +24,4 @@ export default class HomeController {
   }
 }
 
-HomeController.$inject = ['randomNames'];
+HomeController.$inject = ['randomNames', 'jsr'];

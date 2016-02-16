@@ -8,7 +8,7 @@ module.exports = {
   },
   entry: {
     'app': './src/main.js',
-    'vendor': './src/vendor.js',
+    'vendor': ["angular"]
   },
   output: {
     path: './dist',
@@ -18,6 +18,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new slds([
+      { from: './src/mocks.js', to: './mocks.js'},
       { from: './node_modules/@salesforce-ux/design-system/assets', to: './assets'},
       ], {
           ignore: [
@@ -62,6 +63,6 @@ module.exports = {
         loader: 'raw-loader'
       }
     ],
-    noParse: [ path.join(__dirname, 'node_modules', 'angular2', 'bundles') ]
+    noParse: [ path.join(__dirname, 'node_modules', 'angular', 'bundles') ]
   }
 };

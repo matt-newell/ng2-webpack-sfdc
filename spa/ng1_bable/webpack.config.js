@@ -7,8 +7,8 @@ module.exports = {
     extensions: ['', '.ts', '.js']
   },
   entry: {
-    'app': './src/main.ts',
-    'vendor': './src/vendor.ts',
+    'app': './src/main.js',
+    'vendor': ["angular"]
   },
   output: {
     path: './dist',
@@ -18,6 +18,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new slds([
+      { from: './src/mocks.js', to: './mocks.js'},
       { from: './node_modules/@salesforce-ux/design-system/assets', to: './assets'},
       ], {
           ignore: [
@@ -32,6 +33,7 @@ module.exports = {
               'icons/*/*.png'
           ]
       })
+    //   ,new sfdcdeploy({path:'./dist/', name:'ng2'})
   ],
   devServer: {
     inline: true,
@@ -48,9 +50,12 @@ module.exports = {
         loaders: ["style", "css?sourceMap", "sass?sourceMap"]
       },
       {
-        test: /\.ts$/,
+        test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'ts-loader'
+        loader: "babel-loader",
+        query: {
+             presets: ['es2015']
+         }
       },
       {
         test: /\.html$/,
@@ -58,6 +63,6 @@ module.exports = {
         loader: 'raw-loader'
       }
     ],
-    noParse: [ path.join(__dirname, 'node_modules', 'angular2', 'bundles') ]
+    noParse: [ path.join(__dirname, 'node_modules', 'angular', 'bundles') ]
   }
 };

@@ -21,7 +21,7 @@ configSettings = {
     remoteActions: {
                   getSidebar : '{!$RemoteAction.AlfredHomeController.getSidebar}',
                  getUserInfo : '{!$RemoteAction.AlfredHomeController.getUserInfo}',
-                      newell : '{!$Testy.newell}'
+                          yo : '{!$Testy.say.yo.me.newell}'
     },
     mocks: {
         '{!$RemoteAction.AlfredHomeController.getSidebar}' : {
@@ -52,30 +52,11 @@ configSettings = {
                 ];
             }
         },
-        '{!$RemoteAction.AlfredHomeController.getUserInfo}' : {
-            timeout : 500,
-            method  : function () {
-                return {
-                    "avatar": "//placekitten.com/480/360",
-                    "firstName": "Niño&#8217;s",
-                    "id": "00561000000L6lTAAS",
-                    "lastName": "Newell",
-                    "name": "Matt Newell"
-                };
-            }
-        },
-        '{!$Testy.newell}': {
+        '{!$RemoteAction.AlfredHomeController.getUserInfo}' : 'getUserInfo',
+        '{!$Testy.say.yo.me.newell}': 'yo',
+        //String value of your mock matches json object on json-server
+        '{!$Testy.say.yo.me.newell.Simple.Object}': {
             timeout : 5000,
-            method : function(){
-                return
-                    fetch('http://localhost:9000/product')
-                    .then(response => response.json() )
-                    .then(data => data )
-                    .catch(err => console.log(err) );
-            }
-        },
-        '{!$Testy.newell2}': {
-            timeout : 500,
             method : function(){
                 return {
                     "yo" : "my name is yo"

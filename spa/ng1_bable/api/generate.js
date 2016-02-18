@@ -9,18 +9,39 @@ module.exports = function () {
         ' Widget'
     };
 
+    var productImage = function(){
+        return faker.image.imageUrl();
+    };
 
     return {
-        product: _.times( 100, function ( id ) {
+        getUserInfo: {
+            avatar: faker.internet.avatar(),
+            firstName: faker.name.firstName(),
+            id: "00561000000L6lTAAS",
+            lastName: faker.name.lastName(),
+            name: faker.name.findName()
+        },
+        yo: _.times( 6, function ( id ) {
             var title = productName();
             return {
                 id: id+1,
                 title: title,
+                image: productImage(),
                 price: faker.commerce.price(),
                 description: faker.lorem.paragraph(),
-                summary: 'A damn fine widget'
+                summary: faker.lorem.paragraph()
             }
         } ),
-        cart: []
+        products: _.times( 9, function ( id ) {
+            var title = productName();
+            return {
+                id: id+1,
+                title: title,
+                image: productImage(),
+                price: faker.commerce.price(),
+                description: faker.lorem.paragraph(),
+                summary: faker.lorem.paragraph()
+            }
+        } )
     }
 }

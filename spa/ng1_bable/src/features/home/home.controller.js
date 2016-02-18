@@ -2,17 +2,17 @@ export default class HomeController {
   constructor(randomNames, jsr) {
     this.random = randomNames;
     this.name = 'World';
-    this.myProducts = {};
+    this.products = {};
+    jsr({ method: configSettings.remoteActions.yo, args: [] }).then(result => this.products = result );
     this.jsr = jsr;
   }
 
   getProducts() {
-
-      this.myProducts = this.jsr({
-          method: configSettings.remoteActions.newell,
+      this.jsr({
+          method: configSettings.remoteActions.yo,
           args: []
       })
-      .then(result => console.log(result) );
+      .then(result => this.products = result );
   }
 
   changeName() {

@@ -2,23 +2,36 @@
 
 function jsrMocks() {
     var $mocks;
+    var $mockServer;
     return {
-        setMocks: function(mocks) {
+        setMocks: function(mocks, mockServer) {
             $mocks = mocks;
+            $mockServer = mockServer;
         },
 
         $get: function($log,$http,$window,$timeout) {
-            if(! $window.Visualforce){
+            if(!window.Visualforce){
+                var mocker,
+                    mockType = typeof($mocks);
+                if(mockType === 'object'){
+                    mocker = invokeStaticAction;
+
+                }else{
+
+                    mocker = invokeHTTPAction;
+                }
+
                 return {
                     remoting: {
                         Manager: {
-                            invokeAction: invokeStaticAction
+                            invokeAction: mocker,
+                            invokeHTTPAction: invokeHTTPAction
                         }
                     }
                 };
 
             }else{
-                return $window.Visualforce;
+                return Visualforce;
             }
 
             function invokeStaticAction(){
@@ -36,6 +49,49 @@ function jsrMocks() {
                 $timeout(function() {
                     callback(result, event);
                 }, mock.timeout);
+            }
+
+            function invokeHTTPAction(){
+                $log.debug('$mocks is not an object:', mockType, $mockServer);
+                var lastArg = arguments[arguments.length - 1],
+                    callback = lastArg,
+
+                    mockName = configSettings.mocks[arguments[0]],
+                    //used name from configSettings.mocks so its easier to match your json server
+                    // mockName = arguments[0],
+                    // regex = /(\w*)?}/,
+                    // match = regex.exec(mockName),
+                    // mockName = match[0].split('\}')[0],
+
+                    url = $mockServer + mockName,
+                    event = {
+                        status: true
+                    };
+
+                if (typeof(callback) === 'object') {
+                    callback = arguments[arguments.length - 2];
+                }
+
+                $log.debug('http mock url:',url);
+
+                // $http.get(url).
+                //     success(function(data,status,headers,config){
+                //         var result = data;
+                //         $log.debug(data);
+                //         setTimeout(function() {
+                //             callback(result, event);
+                //         }, 100);
+                //     }).
+                //     error(function(data, status, headers, config) {
+                //         $log.error(data, status, headers, config);
+                //     });
+
+                fetch(url)
+                .then(response => response.json() )
+                .then(data => callback(data, event) )
+                .catch(err => $log.error(err) );
+
+
             }
 
         }
@@ -75,7 +131,12 @@ function jsr(jsrMocks,$q,$rootScope){
             parameters.push(request.options);
         }
 
-        Visualforce.remoting.Manager.invokeAction.apply(Visualforce.remoting.Manager, parameters);
+        var mockType = typeof( configSettings.mocks[request.method] );
+        if(mockType === 'object'){
+            Visualforce.remoting.Manager.invokeAction.apply(Visualforce.remoting.Manager, parameters);
+        }else {
+            Visualforce.remoting.Manager.invokeHTTPAction.apply(Visualforce.remoting.Manager, parameters);
+        }
 
         return deferred.promise;
     };
